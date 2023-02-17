@@ -13,7 +13,7 @@ Router.get("/tabs",(req,res)=>{
     filters.p = parseInt(filters.p);
     db.query('SELECT * FROM tabs',(error,results)=>{
         if(error){
-            console.log("error");
+            console.log(error);
         }
         else{
             var nuevaLista = [];
