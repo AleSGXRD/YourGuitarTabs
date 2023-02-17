@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <title>Tu GuitarTabs</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/baseTabs.css" />
+  <script async src="https://unpkg.com/typer-dot-js@0.1.0/typer.js"></script>
+  <script src="../js/bootstrap.min.js"
+    integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <%- include('partials/header')%>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
+          <ul id="collection"><%- include('partials/chargeTabs',{pos})%></ul>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+          <div class="search">
+            <p class="letterHeader">Search</p>
+            <form action="/filter-word" method="POST">
+              <input type="text" placeholder="Search..." name="id" id="id" value="<%= word %>" />
+              <button class="filtrador" type="submit"><img src="../img/icons/search-regular-240.png"
+                  alt="Foto de lupa"></button>
+            </form>
+            <div>
+              <a href="<%= pos-1>=0?'/tabs?p='+parseInt(pos-1)+" &w="+word:'' %>"><img class="arrow"
+                  src="../img/icons/left-arrow-solid-240.png" alt="Logo del artista" /></a>
+              <div id="numbers">
+                <% for(var j=0; j < tabs.length; j +=12){ %>
+
+                  <a class="<%= pos == j / 12 ? 'pos' : ''%>" href="/tabs?p=<%= ( j / 12)+" &w="+word %>">
+                    <%= (1 + j / 12) %>
+                  </a>
+                  <%= j+12<tabs.length? '-' :'' %>
+
+                    <% } %>
+              </div>
+              <a href="<%= pos+1<tabs.length/12?'/tabs?p='+parseInt(pos+1)+' &w='+word:'' %>"><img class="arrow"
+                  src="../img/icons/right-arrow-solid-240.png" alt="Logo del artista" /></a>
+            </div>
+            <div class="addSong">
+              Agregar nueva cancion <a href="/addsong">+</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('partials/footer') %>
+</body>
+
+</html>

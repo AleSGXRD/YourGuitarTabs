@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu GuitarTabs</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/baseAdd.css" />
+</head>
+
+<body>
+    <%- include('partials/header')%>
+        <div class="container d-flex justify-content-center align-items-center">
+            <form class="col-sm-12 col-md-12 col-lg-7 col-xl-7 mt-4 w-300 " action="/add" method="POST">
+                <p class="letterHeader">Informacion</p>
+                <div>
+                    <p>Nombre:</p>
+                    <input type="text" name="name" id="name">
+                </div>
+                <div>
+                    <p>Direccion:</p>
+                    <input type="text" name="direc" id="direc">
+                </div>
+                <div>
+                    <p>Creador(enlace):</p>
+                    <input type="text" name="creator" id="creator">
+                </div>
+                <button class="mt-4" type="submit">ADD+</button>
+            </form>
+        </div>
+</body>
+
+</html>
