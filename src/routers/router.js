@@ -7,11 +7,11 @@ const Router = express.Router();
 Router.get("/",(req,res)=>{
     res.render("index",{web:"index",pos:0});
 })
-Router.get("/tabs",(req,res)=>{
+Router.get("/tabs", async(req,res)=>{
     const filters = req.query;
     console.log(filters.w);
     filters.p = parseInt(filters.p);
-    db.query('SELECT * FROM tabs', (error,results)=>{
+    await db.query('SELECT * FROM tabs', (error,results)=>{
         if(error){
             console.log(error);
         }
