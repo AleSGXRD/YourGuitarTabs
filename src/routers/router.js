@@ -11,7 +11,7 @@ Router.get("/tabs",(req,res)=>{
     const filters = req.query;
     console.log(filters.w);
     filters.p = parseInt(filters.p);
-    db.query('SELECT * FROM tabs',(error,results)=>{
+    db.query('SELECT * FROM tabs', async(error,results)=>{
         if(error){
             console.log(error);
         }
