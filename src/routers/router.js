@@ -1,36 +1,30 @@
 import express from "express";
 
-import db from "../db/db.js"
+import pool from "../db/db.js"
 
 const Router = express.Router();
 
 Router.get("/",(req,res)=>{
     res.render("index",{web:"index",pos:0});
 })
+
 Router.get("/tabs", async(req,res)=>{
     const filters = req.query;
-    console.log(filters.w);
     filters.p = parseInt(filters.p);
-    await db.query('SELECT * FROM tabs', async(error,results)=>{
-        if(error){
-            console.log(error);
+    const [result] = await pool.query(`SELECT * FROM tabs as RESULT`);
+    var nuevaLista = [];
+  
+    if (req.query.w !== "") {
+      for (var i = 0; i < result.length; i++) {
+        var temp = "-";
+        temp += result[i].description.toLocaleLowerCase();
+        if (temp.includes(filters.w.toLocaleLowerCase())) {
+          nuevaLista.push(result[i]);
         }
-        else{
-            var nuevaLista = [];
-          
-            if (req.query.w !== "") {
-              for (var i = 0; i < results.length; i++) {
-                var temp = "-";
-                temp += results[i].description.toLocaleLowerCase();
-                if (temp.includes(filters.w.toLocaleLowerCase())) {
-                  nuevaLista.push(results[i]);
-                }
-              }
-              results = nuevaLista;
-            }
-            res.render("tabs",{web:"tabs",tabs:results,pos:filters.p,word:filters.w,list:filters.l});
-        }
-    })
+      }
+      result = nuevaLista;
+    }
+    res.render("tabs",{web:"tabs",tabs:result,pos:filters.p,word:filters.w,list:filters.l});
 })
 Router.get("/about",(req,res)=>{
     res.render("about",{web:"about"});
@@ -40,17 +34,12 @@ Router.get("/addsong",(req,res)=>{
 })
 
 
-Router.get("/admin",(req,res)=>{
+Router.get("/admin",async (req,res)=>{
   const filters = req.query;
   filters.p = parseInt(filters.p);
-  db.query('SELECT * FROM suggest',(error,results)=>{
-      if(error){
-          console.log("error");
-      }
-      else{
-          res.render("admin",{web:"admin",suggest:results,pos:filters.p});
-      }
-  })
+  const [result] = await pool.query('SELECT * FROM suggest');
+
+  res.render("admin",{web:"admin",suggest:result,pos:filters.p});
 })
 import control from "../controllers/controller.js"
 
