@@ -16,7 +16,6 @@ app.use(express.urlencoded({extended:false}));
 app.use(router);
 
 app.use(express.static(join(_dirname,"public")));
-console.log(join(_dirname,"public"));
 
 import {PORT} from "./config.js"
 
